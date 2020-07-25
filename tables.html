@@ -131,12 +131,13 @@
   
     function clearTable() {
         alert("Clearing...");
-        $.post("/api/clear").then(function () {
+        $.ajax({ url: "/api/clear", method: "POST" }).then(function () {
+
             $("#waitList").empty();
             $("#tableList").empty();
+            
         });
-
-        location.reload();
+        alert("Clearing after ajax line 141...");
     }
 
 

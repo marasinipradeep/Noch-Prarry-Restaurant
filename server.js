@@ -1,17 +1,15 @@
 const express = require("express")
 const app = express();
-
 const path = require("path")
-
 const PORT =  process.env.PORT || 3000;
 
 //url body json parsing 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); 
 
-const tableArr = [];
-const waitlistArr = [];
-const maxNumber = 5;
+let tableArr = [];
+let waitlistArr = [];
+let maxNumber = 5;
 
 
 //route for index.html file 
@@ -30,14 +28,13 @@ app.get("/api/tables", (req, res) => res.json(tableArr))
 //route for when user cliks make Api waitlist link
 app.get("/api/waitlist", (req, res) => res.json(waitlistArr))
 
+
+//route to clear out array (waitlist and reservations)
 app.post("/api/clear", (req, res) => {
     tableArr=[]
     waitlistArr=[]
-  // tableArr.splice(0, arr.length)
-   //waitlistArr.splice(0, arr.length)
-   
 
-
+    res.json({ok:true})
 })
 
 app.post("/api/tables", (req, res) => {
@@ -52,8 +49,6 @@ app.post("/api/tables", (req, res) => {
         console.log(`inside table array line 45 ${tableArr}`)
     }
 })
-
-
 
 app.listen(PORT, function () {
     console.log(`the port is listening to ${PORT}`)
