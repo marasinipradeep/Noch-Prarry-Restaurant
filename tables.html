@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+​
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    ​
+    ​
+</head>
+​
+
+<body>
+    ​
+    <div class="container">
+        ​
+        <div class="jumbotron">
+            <h1 class="text-center"><span class="fa fa-fire"></span>Noch Prarry Restaurant</h1>
+            <hr>
+            <h2 class="text-center">We only have 5 Tables due to COVID-19, reserve now before you miss out! Remeber
+                social distancing rules apply</h2>
+            <br>
+            <div class="text-center">
+                <a href="/tables"><button class="btn btn-lg btn-success"><span class="fa fa-list-alt"></span>
+                        Home</button></a>
+                <a href="/reserve"><button class="btn btn-lg btn-primary"><span class="fa fa-credit-card"></span> Make
+                        Reservation</button></a>
+            </div>
+        </div>
+        ​
+        <div class="card">
+            <h5 class="card-header">Current resavations</h5>
+            <div class="card-body">
+                <div class="card">
+                    <div class="card-body" id="tableList">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+            </div>
+        </div>
+        ​
+
+        <br>
+        <div class="card">
+            <h5 class="card-header">Waiting List</h5>
+            <div class="card-body">
+                <div class="card">
+                    <div class="card-body" id="waitList">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+    ​
+</body>
+
+</html>
+
+<script type="text/javascript">
+    
+    //Localhost URL 
+    const urlBuild = "http://localhost:3000"
+    
+
+    //function to get table information
+    function getTableInfo() {
+
+        //creating API for table
+        const tableURL = urlBuild + "/api/tables"
+        
+        $.ajax({
+            url: tableURL,
+            method: "GET"
+        }).then(function (tableData) {
+            console.log(tableData);
+            for (var i = 0; i < tableData.length; i++) {
+                var tableList = $("#tableList");
+                var listItem = $("<li class='list-group-item mt-4'>");
+                listItem.append(
+                    $("<h2>").text("Table #" + (i + 1)),
+                    $("<hr>"),
+                    $("<h2>").text("ID: " + tableData[i].customerID),
+                    $("<h2>").text("Name: " + tableData[i].customerName),
+                    $("<h2>").text("Email: " + tableData[i].customerEmail),
+                    $("<h2>").text("Phone: " + tableData[i].phoneNumber)
+                );
+                tableList.append(listItem);
+            }
+        });
+    }
+    function getWaitInfo() {
+        const waitURL = urlBuild + "/api/waitlist"
+        $.ajax({
+            url: waitURL,
+            method: "GET"
+        }).then(function (waitData) {
+            console.log(waitData);
+            for (var i = 0; i < waitData.length; i++) {
+                var waitList = $("#waitList");
+                var listItem = $("<li class='list-group-item mt-4'>");
+                listItem.append(
+                    $("<h2>").text("Table #" + (i + 1)),
+                    $("<hr>"),
+                    $("<h2>").text("ID: " + waitData[i].customerID),
+                    $("<h2>").text("Name: " + waitData[i].customerName),
+                    $("<h2>").text("Email: " + waitData[i].customerEmail),
+                    $("<h2>").text("Phone: " + waitData[i].phoneNumber)
+                );
+                waitList.append(listItem);
+            }
+        });
+    }
+    getTableInfo();
+    getWaitInfo();
+</script>
