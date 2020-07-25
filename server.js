@@ -3,20 +3,15 @@ const app = express();
 
 const path = require("path")
 
-const PORT = 3000;
+const PORT =  process.env.PORT || 3000;
 
-// (/) index.html
-// (/tables.html)
-// (/reservations.html)
-
+//url body json parsing 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json()); //Ask Wagner
+app.use(express.json()); 
 
-const tableArr = [{ customerID: "1", customerName: "pradeep", customerEmail: "marasinipradeep@gmail.com",phoneNumber:041 },
-{ customerID: "1", customerName: "pradeep", customerEmail: "marasinipradeep@gmail.com",phoneNumber:041 }
-];
-const waitlistArr = [{ customerID: "1", customerName: "Terry", customerEmail: "marasinipradeep@gmail.com",phoneNumber:041 }];
-const maxNumber = 2;
+const tableArr = [];
+const waitlistArr = [];
+const maxNumber = 5;
 
 
 //route for index.html file 
@@ -34,6 +29,16 @@ app.get("/api/tables", (req, res) => res.json(tableArr))
 
 //route for when user cliks make Api waitlist link
 app.get("/api/waitlist", (req, res) => res.json(waitlistArr))
+
+app.post("/api/clear", (req, res) => {
+    tableArr=[]
+    waitlistArr=[]
+  // tableArr.splice(0, arr.length)
+   //waitlistArr.splice(0, arr.length)
+   
+
+
+})
 
 app.post("/api/tables", (req, res) => {
     var newReservation = req.body

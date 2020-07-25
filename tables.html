@@ -26,7 +26,7 @@
             <div class="text-center">
                 <a href="/tables"><button class="btn btn-lg btn-success"><span class="fa fa-list-alt"></span>
                         Home</button></a>
-                <a href="/reserve"><button class="btn btn-lg btn-primary"><span class="fa fa-credit-card"></span> Make
+                <a href="/reservation"><button class="btn btn-lg btn-primary"><span class="fa fa-credit-card"></span> Make
                         Reservation</button></a>
             </div>
         </div>
@@ -62,6 +62,12 @@
             </div>
         </div>
     </div>
+
+    <footer class="footer">
+        <div class="container">
+          <p><a href="#" id="clear">Clearlist</a> | <a href="/api/tables">API Tables</a> | <a href="/api/waitlist">API Waitlist</a>
+        </div>
+      </footer>
     ​
 </body>
 
@@ -120,7 +126,25 @@
                 waitList.append(listItem);
             }
         });
+
+
+  
+    function clearTable() {
+        alert("Clearing...");
+        $.post("/api/clear").then(function () {
+            $("#waitList").empty();
+            $("#tableList").empty();
+        });
+
+        location.reload();
     }
+
+
+    $("#clear").on("click", clearTable);
+
+}
+
+
     getTableInfo();
     getWaitInfo();
 </script>
